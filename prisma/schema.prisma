@@ -107,7 +107,7 @@ model Message {
   fileUrl String? @db.Text
 
   memberId String
-  menber Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   channelId String
   channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
