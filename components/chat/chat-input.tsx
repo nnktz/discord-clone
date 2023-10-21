@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Plus, Smile } from 'lucide-react';
 import axios from 'axios';
 
+import { useModal } from '@/hooks/use-modal-store';
 import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 
@@ -25,6 +26,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   name,
   type,
 }) => {
+  const { onOpen } = useModal();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,7 +64,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                   <button
                     type='button'
                     className='absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 rounded-full p-1 flex items-center justify-center'
-                    onClick={() => {}}>
+                    onClick={() => onOpen('messageFile', { apiUrl, query })}>
                     <Plus className='text-white dark:text-[#313338]' />
                   </button>
 
