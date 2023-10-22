@@ -9,6 +9,7 @@ import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useParams, useRouter } from 'next/navigation';
 
 import { useModal } from '@/hooks/use-modal-store';
 import { cn } from '@/lib/utils';
@@ -55,6 +56,16 @@ export const ChatItem: React.FC<ChatItemProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = useModal();
+  const params = useParams();
+  const router = useRouter();
+
+  const onMemberClick = () => {
+    if (member.id === currentMember.id) {
+      return;
+    }
+
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
@@ -111,7 +122,9 @@ export const ChatItem: React.FC<ChatItemProps> = ({
   return (
     <div className='relative group flex items-center hover:bg-black/5 p-4 transition w-full'>
       <div className='group flex gap-x-2 items-start w-full'>
-        <div className='cursor-pointer hover:drop-shadow-md transition'>
+        <div
+          onClick={onMemberClick}
+          className='cursor-pointer hover:drop-shadow-md transition'>
           <UserAvatar src={member.profile.imageUrl} />
         </div>
 
